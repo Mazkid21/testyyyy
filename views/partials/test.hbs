@@ -1,0 +1,50 @@
+<div class="col-full masonry-wrap">
+    <h5>{{propertyCount}}</h5>
+    <br />
+    <form action="/search/next" method="post">
+        <input name="nextLink" value={{nextLink}} />
+        <input type="submit" value="Next Page">
+    </form>
+
+    <div class="masonry">
+
+        {{#if error}}
+        <h1>ERRRORRR</h1>
+        {{else}}
+
+
+        {{#each property}}
+        <div class="masonry__brick" data-aos="fade-up">
+            <div class="">
+                <div class="item-folio__thumb">
+
+                    <a href="/search/{{this.ListingKey}}">
+                        <img src="{{this.Media.0.MediaURL}}" class=" thumb-link" title="Shutterbug" data-size="1050x700"
+                            alt="">
+                    </a>
+                </div>
+
+                <div class="item-folio__text">
+                    <h3 class="item-folio__title">
+                        {{this.UnparsedAddress}}
+                    </h3>
+                    <p class="item-folio__cat">
+                        {{this.Directions}}
+                    </p>
+                </div>
+
+                <a href="" class="item-folio__project-link" title="Project link">
+                    <i class="icon-link"></i>
+                </a>
+
+                <div class="item-folio__caption">
+                    <p>fwfwef</p>
+                </div>
+
+            </div>
+        </div> <!-- end masonry__brick -->
+        {{/each}}
+        {{/if}}
+    </div> <!-- end masonry -->
+</div> <!-- end col-full -->
+</div> <!-- end works-content -->
