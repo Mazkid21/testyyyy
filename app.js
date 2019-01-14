@@ -17,21 +17,21 @@ var assert = require('assert');
 
 //Routes....dont forget to add to app.use() below
 var homeRoute = require('./routes/index');
-// var listingRoute = require('./routes/listing');
-// var adminSignUpRoute = require('./routes/adminSignup');
-//var userSignUpRoute = require('./routes/userSignUp');
-//var logOutRoute = require('./routes/logout');
-//var userLoginRoute = require('./routes/userLogin');
-//var adminLoginRoute = require('./routes/adminLogin');
-//var searchRoute = require('./routes/search');
-//var rentalRoute = require('./routes/rental');
-//var rentalSearchRoute = require('./routes/rentalSearch');
-//var mongoRenatlSingle = require('./routes/mongoRentalSingle');
-//var videosRoute = require('./routes/videos');
-//var admin = require('./routes/admin');
-//var vidAdmin = require('./routes/adminVid');
-//var marketMap = require('./routes/marketMap');
-//var bio = require('./routes/bio');
+var listingRoute = require('./routes/listing');
+var adminSignUpRoute = require('./routes/adminSignup');
+var userSignUpRoute = require('./routes/userSignUp');
+var logOutRoute = require('./routes/logout');
+var userLoginRoute = require('./routes/userLogin');
+var adminLoginRoute = require('./routes/adminLogin');
+var searchRoute = require('./routes/search');
+var rentalRoute = require('./routes/rental');
+var rentalSearchRoute = require('./routes/rentalSearch');
+var mongoRenatlSingle = require('./routes/mongoRentalSingle');
+var videosRoute = require('./routes/videos');
+var admin = require('./routes/admin');
+var vidAdmin = require('./routes/adminVid');
+var marketMap = require('./routes/marketMap');
+var bio = require('./routes/bio');
 var users = require('./routes/users');
 var app = express();
 
@@ -102,21 +102,21 @@ app.use(function (req, res, next) {
 
 //express use routes
 app.use('/', homeRoute);
-//app.use('/listing', listingRoute);
-//app.use('/admin-signup', adminSignUpRoute);
-//app.use('/user-signup', userSignUpRoute);
-//app.use('/user-login', userLoginRoute);
-//app.use('/admin-login', adminLoginRoute);
-//app.use('/logout', logOutRoute);
-//app.use('/search', searchRoute);
-//app.use('/rentals', rentalRoute);
-//app.use('/rentals-search', rentalSearchRoute);
-//app.use('/custom', mongoRenatlSingle);
-//app.use('/videos', videosRoute);
-//app.use('/admin', admin);
-//app.use('/admin-video', vidAdmin);
-//app.use('/market-map', marketMap);
-//app.use('/bio', bio);
+app.use('/listing', listingRoute);
+app.use('/admin-signup', adminSignUpRoute);
+app.use('/user-signup', userSignUpRoute);
+app.use('/user-login', userLoginRoute);
+app.use('/admin-login', adminLoginRoute);
+app.use('/logout', logOutRoute);
+app.use('/search', searchRoute);
+app.use('/rentals', rentalRoute);
+app.use('/rentals-search', rentalSearchRoute);
+app.use('/custom', mongoRenatlSingle);
+app.use('/videos', videosRoute);
+app.use('/admin', admin);
+app.use('/admin-video', vidAdmin);
+app.use('/market-map', marketMap);
+app.use('/bio', bio);
 app.use('/users', users);
 
 

@@ -1,26 +1,39 @@
 {
-  "name": "myapp",
+  "name": "node-express-mongo",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "bcrypt-nodejs": "0.0.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
-    "dotenv": "^6.2.0",
+    "dot-env": "0.0.1",
+    "dotenv": "^6.0.0",
     "express": "~4.16.0",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
+    "express-validator": "^5.3.0",
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
+    "jsdom": "^13.0.0",
+    "method-override": "^3.0.0",
     "mongodb": "^2.2.36",
-    "mongoose": "^5.4.3",
+    "mongoose": "^5.3.4",
+    "monk": "^6.0.6",
     "morgan": "~1.9.0",
+    "owl.carousel": "^2.3.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "passport-local-roles": "^1.0.1",
+    "req-flash": "0.0.3",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "flightplan": "^0.6.19",
+    "fly": "^3.0.2"
   }
 }

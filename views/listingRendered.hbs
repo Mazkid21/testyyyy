@@ -1,0 +1,1048 @@
+<head>
+    <meta charset="UTF-8">
+
+    <!--Responive Design-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Search Page</title>
+
+    <head>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/css/hover.css">
+        <link rel="stylesheet" href="/css/card.css">
+        <script src="/js/card.js"></script>
+        <script src="/js/dropdownForm.js"></script>
+        <link rel="stylesheet" href="/css/slider.css">
+        <script src="/js/slider.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+            crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Lato:100|Poiret+One" rel="stylesheet">
+
+    </head>
+    <style>
+        /* Set the size of the div element that contains the map */
+    #map {
+            position: relative;
+    overflow: hidden;
+    float: right;
+
+
+        height: 100%;
+    width: 100%;
+    margin: auto;
+    }
+
+    /* The location pointed to by the popup tip. */
+      .popup-tip-anchor {
+        height: 0;
+        position: absolute;
+        /* The max width of the info window. */
+        width: 200px;
+      }
+      /* The bubble is anchored above the tip. */
+      .popup-bubble-anchor {
+        position: absolute;
+        width: 100%;
+        bottom: /* TIP_HEIGHT= */ 8px;
+        left: 0;
+      }
+      /* Draw the tip. */
+      .popup-bubble-anchor::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        /* Center the tip horizontally. */
+        transform: translate(-50%, 0);
+        /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
+        width: 0;
+        height: 0;
+        /* The tip is 8px high, and 12px wide. */
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: /* TIP_HEIGHT= */ 8px solid white;
+      }
+      /* The popup bubble itself. */
+      .popup-bubble-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -100%);
+        /* Style the info window. */
+        background-color: white;
+        padding: 5px;
+        border-radius: 5px;
+        font-family: sans-serif;
+        overflow-y: auto;
+        max-height: 60px;
+        box-shadow: 0px 2px 10px 1px rgba(0,0,0,0.5);
+      }
+
+</style>
+
+    <!-- /******* Navigation Section ********/ -->
+    <section id='works' class="s-works">
+
+
+
+
+        <!-- /******* Search & Filter Section Right Under Nav ********/ -->
+        <form action="/search" method="post" style="padding: 90px;
+    margin: 0 auto;">
+            <div class="search-filter-nav">
+                <div class="search-container" style="flex: 1;">
+                    <input type="text" id="search-bar" placeholder="Search Cities..">
+                    <div class="search-icon-div"><i class="fas fa-search"></i></div>
+                </div>
+
+                <section class="range-slider">
+                    <div>
+                        <label class="rangeValues"></label>
+                        <input id="sliderMin" value="100000" min="100000" max="9500000" name="minPrice" step="100" type="range">
+                        <input id="sliderMax" value="100000000" min="10000000" max="100000000" name="maxPrice" step="100"
+                            type="range">
+                    </div>
+                </section>
+                <div class="anyPrice-div box-size-nav-u custom-test dropdown dropbutton" style="flex: 1;list-style-type: none;padding-left: 0px;padding-right: 0px;margin-right: 50px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-right-width: 0px;">
+                    <div class="dropdown">
+
+
+                        <select name="city" id="type" style="border: 1px solid #D0CFCE;">
+                            <option value="city0">--Select an City--</option>
+                            <option value="Aspen">Aspen</option>
+                            <option value="b__536e6f776d6173732056696c6c616765">Snowmass Village</option>
+                            <option value="b__576f6f647920437265656b">Woody Creek</option>
+                            <option value="b__4f6c6420536e6f776d617373">Old Snowmass</option>
+                            <option value="Basalt">Basalt</option>
+                            <option value="Carbondale">Carbondale</option>
+                            <option value="Glenwood">Glenwood</option>
+                            <option value="Redstone">Redstone</option>
+                            <option value="b__4372797374616c2056616c6c6579">Crystal Valley</option>
+
+                        </select>
+
+                        <select name="neighborhood" id="citySub" style="display: none; border: 1px solid #D0CFCE;">
+                            <option value="">-- select neighborhood -- </option>
+                        </select>
+
+
+                    </div>
+                </div>
+
+                <div class="allBeds-div box-size-nav-u custom-test dropdown dropbutton" style=" margin-left: -5px; flex: 1;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;">
+                    <div class="dropdown">
+                        <select name="numBed" id="type" style="border: 1px solid #D0CFCE;">
+                            <option value="city0">Bedrooms</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9+</option>
+
+                        </select>
+
+
+                    </div>
+                </div>
+
+                <div class="allhomes-div box-size-nav-uon custom-test" style=" margin-left: -5px; flex: 1;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;">
+                    <div class="dropdown">
+                        <select name="numBath" id="type" style="border: 1px solid #D0CFCE;">
+                            <option value="city0">Bathrooms</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9+</option>
+
+                        </select>
+
+
+                    </div>
+                </div>
+                {{!-- <div class="more-div box-size-nav-uon custom-test" style="flex: 1; margin-left: -5px;">
+                    More
+                    <i class="fas fa-caret-down" style="margin: 0px 4px;"></i>
+                </div> --}}
+
+                <div class="saveSearch-div box-size-nav-uon " style="flex: 3; margin: 2px 0px;">
+                    <button type="submit">
+                        SEARCH</button>
+                </div>
+        </form>
+        </div>
+
+
+        <!-- /******* Homes Listing Left Side ********/ -->
+        <!-- /******* Google Map Listing Right Side ********/ -->
+        <div id="homesNMap-main-platform">
+            <div class="leftside-homes-container">
+                <div class="sortforyou-container">
+
+
+
+
+                    <!-- / ******* ************************ ********/ -->
+                    <!-- / ******* 8 box div of homes n info ********/ -->
+                    <!-- / ******* ************************ ********/ -->
+
+
+                    <div class="homes-list-platform">
+                        {{#each property}}
+                        <div class="home-section-1 home-custom">
+                            <a href="/search/{{this.ListingKey}}">
+                                <div class="img-div" style="background: url({{this.Media.0.MediaURL}}) no-repeat center center;  height: 25rem;
+    background-size: cover;">
+
+                                </div>
+                            </a>
+                            <div class="price-div" style="display: none">{{this.ListPrice}}
+                            </div>
+                            <div class="price-div-commas">
+
+                            </div>
+
+                            <div class="bdBaSqft-div">
+                                <i class="fas fa-bed fa-style-on"></i>
+                                <h6 class="h6-style-on bd-name">{{this.BedroomsTotal}}bd
+                                </h6>
+                                <i class="fas fa-bath fa-bed-style-on"></i>
+                                <h6 class="h6-bed-style-on ba-name">{{
+                                    this.BathroomsFull}}ba</h6>
+
+                                <h6 class="h6-bed-style-on sqft-name">{{this.LivingArea}} sqft</h6>
+                            </div>
+                            <div class="user-save-form">
+                                <form action="/listing/insert" method="post" style="margin-bottom: 0px;font-size: 15px;">
+
+                                    <div class="input">
+                                        <input type="text" id="description" name="description" value="{{this.ListingKey}}"
+                                            style="display: none;" />
+                                    </div>
+
+
+
+                                    <button type="submit" style="    float: right;padding-right: 0px;overflow: hidden;margin-right: 1px;padding-left: 0px;border-top-width: 0px;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;"><i
+                                            class="fa fa-bookmark"></i>Save</button>
+                                </form>
+                            </div>
+                            <div class="home-address">
+                                <h5 class="addy">
+                                    <span id="street-name">{{this.StreetNumber}},
+                                        {{this.StreetName}}
+                                        {{this.StreetSuffix}}</span>
+
+                                </h5>
+                            </div>
+                            <p class="google-Coordinates-lng" style="display: ">{{this.Longitude}}</p>
+                            <p class="google-Coordinates-lat" style="display:">{{this.Latitude}}</p>
+
+                        </div>
+                        {{/each}}
+                        {{!-- <div class="home-section-2 home-custom">
+                            <div class="img-div">
+
+                            </div>
+                            <div class="price-div">$2,066,000</div>
+                            <div class="bdBaSqft-div">
+                                <i class="fas fa-bed fa-style-on"></i>
+                                <h6 class="h6-style-on">2bd</h6>
+
+                                <i class="fas fa-bath fa-bed-style-on"></i>
+                                <h6 class="h6-bed-style-on">3ba</h6>
+
+                                <h6 class="h6-bed-style-on">1,234 sqft</h6>
+                            </div>
+                            <div class="home-address">
+                                <h5 class="addy">
+                                    1433 Ocean Dr #33<br>
+                                    San Francisco, CA 94122
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="home-section-3 home-custom">
+                            <div class="img-div">
+
+                            </div>
+                            <div class="price-div">$2,759,500+</div>
+                            <div class="bdBaSqft-div">
+                                <i class="fas fa-bed fa-style-on"></i>
+                                <h6 class="h6-style-on">2bd</h6>
+
+                                <i class="fas fa-bath fa-bed-style-on"></i>
+                                <h6 class="h6-bed-style-on">3ba</h6>
+
+                                <h6 class="h6-bed-style-on">1,234 sqft</h6>
+                            </div>
+                            <div class="home-address">
+                                <h5 class="addy">
+                                    600 Silliman St<br>
+                                    San Francisco, CA 94134
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="home-section-4 home-custom">
+                            <div class="img-div">
+
+                            </div>
+                            <div class="price-div">$2,188,000</div>
+                            <div class="bdBaSqft-div">
+                                <i class="fas fa-bed fa-style-on"></i>
+                                <h6 class="h6-style-on">2bd</h6>
+
+                                <i class="fas fa-bath fa-bed-style-on"></i>
+                                <h6 class="h6-bed-style-on">3ba</h6>
+
+                                <h6 class="h6-bed-style-on">1,234 sqft</h6>
+                            </div>
+                            <div class="home-address">
+                                <h5 class="addy">
+                                    1200 California St #5D<br>
+                                    San Francisco, CA 94109
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="home-section-5 home-custom">
+                            <div class="img-div">
+
+                            </div>
+                            <div class="price-div">$1,895,000</div>
+                            <div class="bdBaSqft-div">
+                                <i class="fas fa-bed fa-style-on"></i>
+                                <h6 class="h6-style-on">2bd</h6>
+
+                                <i class="fas fa-bath fa-bed-style-on"></i>
+                                <h6 class="h6-bed-style-on">3ba</h6>
+
+                                <h6 class="h6-bed-style-on">1,234 sqft</h6>
+                            </div>
+                            <div class="home-address">
+                                <h5 class="addy">
+                                    569-571 Ivy St #15<br>
+                                    San Francisco, CA
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="home-section-6 home-custom">
+                            <div class="img-div">
+
+                            </div>
+                            <div class="price-div">$7,495,000+</div>
+                            <div class="bdBaSqft-div">
+                                <i class="fas fa-bed fa-style-on"></i>
+                                <h6 class="h6-style-on">2bd</h6>
+
+                                <i class="fas fa-bath fa-bed-style-on"></i>
+                                <h6 class="h6-bed-style-on">3ba</h6>
+
+                                <h6 class="h6-bed-style-on">1,234 sqft</h6>
+                            </div>
+                            <div class="home-address">
+                                <h5 class="addy">
+                                    900 Bush St #901 #15<br>
+                                    San Mateo, CA
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="home-section-7 home-custom">
+                            <div class="img-div">
+
+                            </div>
+                            <div class="price-div">$10,345,000</div>
+                            <div class="bdBaSqft-div">
+                                <i class="fas fa-bed fa-style-on"></i>
+                                <h6 class="h6-style-on">2bd</h6>
+
+                                <i class="fas fa-bath fa-bed-style-on"></i>
+                                <h6 class="h6-bed-style-on">3ba</h6>
+
+                                <h6 class="h6-bed-style-on">1,234 sqft</h6>
+                            </div>
+                            <div class="home-address">
+                                <h5 class="addy">
+                                    1047 Oak St #A<br>
+                                    Oakland, CA
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="home-section-8 home-custom">
+                            <div class="img-div">
+
+                            </div>
+                            <div class="price-div">$55,000,000</div>
+                            <div class="bdBaSqft-div">
+                                <i class="fas fa-bed fa-style-on"></i>
+                                <h6 class="h6-style-on">2bd</h6>
+
+                                <i class="fas fa-bath fa-bed-style-on"></i>
+                                <h6 class="h6-bed-style-on">3ba</h6>
+
+                                <h6 class="h6-bed-style-on">1,234 sqft</h6>
+                            </div>
+                            <div class="home-address">
+                                <h5 class="addy">
+                                    201 Harrison St #113<br>
+                                    San Jose, CA
+                                </h5>
+                            </div>
+                        </div> --}}
+
+                        <!-- -------------------------------------------- -->
+                        <!-- ---------JavaScript Add on Div------------------ -->
+                        <!-- -------------------------------------------- -->
+
+
+                        <!-- <div class="home-section-1 home-custom">
+                <div class="img-div">
+
+                </div>
+                <div class="price-div">$1,974,000</div>
+                <div class="bdBaSqft-div">
+                    <i class="fas fa-bed fa-style-on"></i>
+                    <h6 class="h6-style-on">2bd</h6>
+
+                    <i class="fas fa-bath fa-bed-style-on"></i>
+                    <h6 class="h6-bed-style-on">3ba</h6>
+
+                    <h6 class="h6-bed-style-on">1,234 sqft</h6>
+                </div>
+                <div class="home-address">
+                    <h5 class="addy">
+                        1874 Bonanza St #15<br>
+                        Oak Road, San Francisco, CA
+                    </h5>
+                </div>
+            </div> -->
+
+
+                        <!-- -------------------------------------------- -->
+                        <!-- -------------------------------------------- -->
+                        <!-- -------------------------------------------- -->
+
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="rightside-map-container">
+                <div id="map" class="boxShadow"></div>
+
+            </div>
+        </div>
+
+
+
+
+
+        <!----------------------------------------->
+        <!------------Sign in Page Pop Up---------->
+        <!----------------------------------------->
+
+        <!-- sign-wrapper displayShow-->
+        <div class="sign-in-div sign-wrapper">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">SIGN IN</h2>
+
+                <h3 class="custom-input-text">USERNAME</h3>
+                <input type="text" class="form-control custom-input" name="username" placeholder="" required=""
+                    autofocus="" />
+                <br>
+                <h3 class="custom-input-text" style="margin-top: 10px;">PASSWORD</h3>
+                <input type="password" class="form-control custom-input" name="password" placeholder="" required="" />
+                <!-- <label class="checkbox">
+        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
+      </label> -->
+                <br>
+                <button class="btn btn-lg btn-primary btn-block custom-input-signin" type="submit">SIGN IN</button>
+            </form>
+        </div>
+
+
+        <!----------------------------------------->
+        <!------------Add New Homes---------------->
+        <!----------------------------------------->
+        <!-- home-wrapper displayShow-home -->
+        <div class="add-newhome-div home-wrapper">
+            <form class="form-home">
+                <h2 class="home-heading">List your new home!</h2>
+
+                <!-- --------IMAGE GALLERY---------- -->
+                <div class="gallery cf">
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/4.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/3.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/5.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/8.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/1.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/4.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/2.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/6.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/7.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/8.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/7.png?raw=true " />
+                    </div>
+                    <div>
+                        <img src="https://github.com/kenvantruong/real-estate/blob/master/img-houses/8.png?raw=true " />
+                    </div>
+                </div>
+
+                <!-- --------IMAGE GALLERY---------- -->
+                <form action="" id="form-platform-control">
+                    <div class="position-input-houses">
+                        <h3 class="custom-input-text">Price</h3>
+                        <input type="text" id="price-input" class="form-control home-custom-input" name="price"
+                            placeholder="" required="" autofocus="" />
+                    </div>
+
+                    <!-- <h3 class="custom-input-text" style="margin: 39px 0px 39px 0px;">Address</h3> -->
+
+                    <div class="position-input-houses">
+                        <h4 class="custom-input-text">Street:</h4>
+                        <input type="text" id="street-input" class="form-control home-custom-input" name="adress"
+                            placeholder="" required="" autofocus="" />
+                    </div>
+
+                    <div class="position-input-houses">
+                        <h4 class="custom-input-text">City:</h4>
+                        <input type="text" id="city-input" class="form-control home-custom-input" name="adress"
+                            placeholder="" required="" autofocus="" />
+                    </div>
+
+                    <div class="position-input-houses">
+                        <!-- State Text Input -->
+                        <h4 class="custom-input-text">State:</h4>
+                        <input type="text" id="state-input" class="form-control home-custom-input" name="adress"
+                            placeholder="" required="" autofocus="" />
+                    </div>
+
+                    <br>
+                    <!-- Options -->
+                    <h3 class="custom-input-text" style="margin-top: 10px;">Options</h3>
+                    <!-- Bedroom: -->
+                    <i class="fas fa-bed fa-style-on"></i>
+                    <select name="" id="">
+                        <option value="">1 Bed</option>
+                        <option value="">2 Bed</option>
+                        <option value="">3 Bed</option>
+                        <option value="">4 Bed</option>
+                        <option value="">5 Bed+</option>
+                    </select>
+                    <!-- Bathroom: -->
+                    <i class="fas fa-bath fa-bed-style-on"></i>
+                    <select name="" id="">
+                        <option value="">1 Bath</option>
+                        <option value="">2 Bath</option>
+                        <option value="">3 Bath</option>
+                        <option value="">4 Bath</option>
+                        <option value="">5 Bath+</option>
+                    </select>
+                    <!-- Sqft -->
+                    <i class="fas fa-home"></i>
+                    <select name="" id="">
+                        <option value="">1,000sqft</option>
+                        <option value="">3,000sqft</option>
+                        <option value="">5,000sqft</option>
+                        <option value="">10,000sqft</option>
+                        <option value="">20,000sqft</option>
+                    </select>
+
+                    <!-- <input type="text" class="form-control custom-input" name="options" placeholder="" required="" autofocus="" />     -->
+
+                    <!-- btn btn-lg btn-primary btn-block  -->
+                    <br>
+                    <!-- Submit Button -->
+                    <div class="input-submit-style">
+                        <input id="submit-btn-homes" class="form-input-submit" type="submit">
+                    </div>
+        </div>
+        </form>
+
+
+    </section>
+    <script>
+        var coordinatesLAT = document.getElementsByClassName('google-Coordinates-lat');
+        var coordinatesLNG = document.getElementsByClassName('google-Coordinates-lng');
+
+
+        console.log(coordinatesLAT[1].innerHTML + "hiiiiii");
+
+        var long1 = parseFloat(coordinatesLNG[0].innerHTML);
+        var lat1 = parseFloat(coordinatesLAT[0].innerHTML);
+
+        var long2 = parseFloat(coordinatesLNG[1].innerHTML);
+        var lat2 = parseFloat(coordinatesLAT[1].innerHTML);
+
+        var long3 = parseFloat(coordinatesLNG[2].innerHTML);
+        var lat3 = parseFloat(coordinatesLAT[2].innerHTML);
+
+        var long4 = parseFloat(coordinatesLNG[3].innerHTML);
+        var lat4 = parseFloat(coordinatesLAT[3].innerHTML);
+
+
+        var long5 = parseFloat(coordinatesLNG[4].innerHTML);
+        var lat5 = parseFloat(coordinatesLAT[4].innerHTML);
+
+        var long6 = parseFloat(coordinatesLNG[5].innerHTML);
+        var lat6 = parseFloat(coordinatesLAT[5].innerHTML);
+
+        var long7 = parseFloat(coordinatesLNG[6].innerHTML);
+        var lat7 = parseFloat(coordinatesLAT[6].innerHTML);
+
+        var long8 = parseFloat(coordinatesLNG[7].innerHTML);
+        var lat8 = parseFloat(coordinatesLAT[7].innerHTML);
+
+        var long9 = parseFloat(coordinatesLNG[8].innerHTML);
+        var lat9 = parseFloat(coordinatesLAT[8].innerHTML);
+
+        var long10 = parseFloat(coordinatesLNG[9].innerHTML);
+        var lat10 = parseFloat(coordinatesLAT[9].innerHTML);
+        // Initialize and add the map
+        // Initialize and add the map
+
+        var map, popup, Popup;
+
+
+        function initMap() {
+
+
+            var center = function (arr) {
+                var minX, maxX, minY, maxY;
+                for (var i = 0; i < arr.length; i++) {
+                    var x = arr[i][0], y = arr[i][1];
+                    minX = (x < minX || minX == null) ? x : minX;
+                    maxX = (x > maxX || maxX == null) ? x : maxX;
+                    minY = (y < minY || minY == null) ? y : minY;
+                    maxY = (y > maxY || maxY == null) ? y : maxY;
+                }
+                return [(minX + maxX) / 2, (minY + maxY) / 2];
+            };
+
+            var coords = [
+                [lat1, long1],
+                [lat2, long2],
+                [lat3, long3],
+                [lat4, long4],
+                [lat5, long5],
+                [lat6, long6],
+                [lat7, long7],
+                [lat8, long8],
+                [lat9, long9],
+                [lat10, long10],
+            ];
+
+            var c = center(coords);
+
+
+            // The location of Uluru
+            var uluru = { lat: c[0], lng: c[1] };
+            var points1 = { lat: lat1, lng: long1 }
+            var points2 = { lat: lat2, lng: long2 }
+            var points3 = { lat: lat3, lng: long3 }
+            var points4 = { lat: lat4, lng: long4 }
+            var points5 = { lat: lat5, lng: long5 }
+            var points6 = { lat: lat6, lng: long6 }
+            var points7 = { lat: lat7, lng: long7 }
+            var points8 = { lat: lat8, lng: long8 }
+            var points9 = { lat: lat9, lng: long9 }
+            var points10 = { lat: lat10, lng: long10 }
+
+            // The map, centered at Uluru
+            map = new google.maps.Map(
+                document.getElementById('map'), {
+                    zoom: 13, center: uluru, styles: [
+                        {
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#f5f5f5"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.icon",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#616161"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.text.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#f5f5f5"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "labels",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#bdbdbd"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#eeeeee"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.text",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#757575"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.park",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#e5e5e5"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.park",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#9e9e9e"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#ffffff"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.arterial",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#757575"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#dadada"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#616161"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "labels",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#9e9e9e"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#e5e5e5"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.station",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#eeeeee"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#c9c9c9"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#9e9e9e"
+                                }
+                            ]
+                        }
+                    ],
+                    mapTypeControlOptions: {
+                        mapTypeIds: [google.maps.MapTypeId.TERRAIN]
+                    },
+                    mapTypeId: google.maps.MapTypeId.TERRAIN
+                });
+
+
+
+            // The marker, positioned at Uluru
+
+
+
+            var theNumber = document.getElementsByClassName("price-div");
+            var theDivs = document.getElementsByClassName("price-div-commas");
+
+            for (var i = 0; i < theNumber.length; i++) {
+
+
+
+                var price = []
+
+                price = theNumber[i].innerHTML;
+
+                price = Number(price).toLocaleString();
+
+
+                theDivs[i].innerHTML = "$" + price;
+
+            }
+
+            var marker = new google.maps.Marker({
+                position: points1, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[0].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+            var marker = new google.maps.Marker({
+                position: points2, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[1].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+            var marker = new google.maps.Marker({
+                position: points3, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[2].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+            var marker = new google.maps.Marker({
+                position: points4, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[3].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+            var marker = new google.maps.Marker({
+                position: points5, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[4].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+            var marker = new google.maps.Marker({
+                position: points6, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[5].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+            var marker = new google.maps.Marker({
+                position: points7, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[6].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+            var marker = new google.maps.Marker({
+                position: points8, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[7].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+            var marker = new google.maps.Marker({
+                position: points9, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[8].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+
+            var marker = new google.maps.Marker({
+                position: points10, map: map, title: 'Hello World!', icon: {
+                    labelOrigin: new google.maps.Point(16, 64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                }, label: {
+                    text: theDivs[9].innerHTML,
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "13px"
+                }
+            });
+
+        }
+
+
+
+
+
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYFXJkYOxxDT3jU1jb5DorpO5rWrPrD-o&callback=initMap">
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

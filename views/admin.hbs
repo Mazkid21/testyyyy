@@ -1,0 +1,353 @@
+<style>
+    body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+section {
+  float: left;
+  background: #bdc3c7;
+  padding: 10px;
+  margin: 30px;
+  width: 300px;
+  box-shadow: 3px 3px 1px #34495e;
+  min-height: 400px;
+}
+
+section:first-of-type {
+  margin-left: 0;
+}
+
+section:last-of-type {
+  margin-right: 0;
+}
+
+section h3 {
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
+}
+
+.insert {
+  background: #2ecc71;
+}
+
+.get {
+  background: #ecf0f1;
+}
+
+.update {
+  background: #3498db;
+}
+
+.delete {
+  background: #e74c3c;
+}
+
+.input label {
+  display: block;
+  font-weight: bold;
+  padding: 2px 0;
+}
+
+input,
+button {
+  font: inherit;
+}
+
+button {
+  margin-top: 10px;
+  border: none;
+  box-shadow: 1px 1px 1px #34495e;
+  border-radius: 0;
+  background: #ecf0f1;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #bdc3c7;
+}
+
+.item {
+  margin: 10px 0;
+  padding: 5px;
+  background: #95a5a6;
+  border: 1px solid black;
+}
+
+</style>
+<div style="
+    display: flex;
+    flex-direction: column;">
+    <h1 style="text-align: center;">SECRET PAGE</h1>
+
+
+    <h1 style="text-align: center;">ADMIN PAGE</h1>
+    <a href="/admin-video" style="margin: 0 auto;">
+        <button style="margin: 0 auto;">VIDEO</button>
+    </a>
+    <div class="admin-info" style="display: inline-flex;">
+        <section class="insert" style="flex-grow: 1;">
+            <h3>Insert Data</h3>
+            <form action="/admin/insert" method="post">
+                <h5>INFO:</h5>
+                <div class="input">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title">
+                </div>
+                <div class="input">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="description">
+                </div>
+                <div class="input">
+                    <label for="numBeds">Number of Beds</label>
+                    <input type="text" id="numBeds" name="numBeds">
+                </div>
+                <div class="input">
+                    <label for="numBaths">Number of Baths</label>
+                    <input type="text" id="numBaths" name="numBaths">
+                </div>
+                <div class="input">
+                    <label for="squareFeet">Square Feet</label>
+                    <input type="text" id="squareFeet" name="squareFeet">
+                </div>
+                <div class="input">
+                    <label for="acres">Acres</label>
+                    <input type="text" id="acres" name="acres">
+                </div>
+                <div class="input">
+                    <label for="listingFeatures">Listing Features</label>
+                    <input type="text" id="listingFeatures" name="listingFeatures">
+                </div>
+                <div class="input">
+                    <label for="nightRates">Nightly Rates</label>
+                    <input type="text" id="nightRates" name="nightRates">
+                </div>
+                <div class="input">
+                    <label for="monthlyRates">Monthly Rates</label>
+                    <input type="text" id="monthlyRates" name="monthlyRates">
+                </div>
+                <h5>GALLERY IMAGES:</h5>
+                <div class="input">
+                    <label for="photoURL1">Photo URL 1</label>
+                    <input type="text" id="photoURL1" name="photoURL1">
+                </div>
+                <div class="input">
+                    <label for="photoURL2">Photo URL 2</label>
+                    <input type="text" id="photoURL2" name="photoURL2">
+                </div>
+                <div class="input">
+                    <label for="photoURL3">Photo URL 3</label>
+                    <input type="text" id="photoURL3" name="photoURL3">
+                </div>
+                <div class="input">
+                    <label for="photoURL4">Photo URL 4</label>
+                    <input type="text" id="photoURL4" name="photoURL4">
+                </div>
+                <div class="input">
+                    <label for="photoURL5">Photo URL 5</label>
+                    <input type="text" id="photoURL5" name="photoURL5">
+                </div>
+                <div class="input">
+                    <label for="photoURL6">Photo URL 6</label>
+                    <input type="text" id="photoURL6" name="photoURL6">
+                </div>
+                <div class="input">
+                    <label for="photoURL7">Photo URL 7</label>
+                    <input type="text" id="photoURL7" name="photoURL7">
+                </div>
+                <div class="input">
+                    <label for="photoURL8">Photo URL 8</label>
+                    <input type="text" id="photoURL8" name="photoURL8">
+                </div>
+                <div class="input">
+                    <label for="photoURL9">Photo URL 9</label>
+                    <input type="text" id="photoURL9" name="photoURL9">
+                </div>
+                <div class="input">
+                    <label for="photoURL10">Photo URL 10</label>
+                    <input type="text" id="photoURL10" name="photoURL10">
+                </div>
+                <div class="input">
+                    <label for="photoURL11">Photo URL 11</label>
+                    <input type="text" id="photoURL11" name="photoURL11">
+                </div>
+                <div class="input">
+                    <label for="photoURL12">Photo URL 12</label>
+                    <input type="text" id="photoURL12" name="photoURL12">
+                </div>
+                <div class="input">
+                    <label for="photoURL13">Photo URL 13</label>
+                    <input type="text" id="photoURL13" name="photoURL13">
+                </div>
+                <div class="input">
+                    <label for="photoURL14">Photo URL 14</label>
+                    <input type="text" id="photoURL14" name="photoURL14">
+                </div>
+                <div class="input">
+                    <label for="photoURL15">Photo URL 15</label>
+                    <input type="text" id="photoURL15" name="photoURL15">
+                </div>
+                <div class="input">
+                    <label for="photoURL16">Photo URL 16</label>
+                    <input type="text" id="photoURL16" name="photoURL16">
+                </div>
+                <div class="input">
+                    <label for="photoURL17">Photo URL 17</label>
+                    <input type="text" id="photoURL17" name="photoURL17">
+                </div>
+                <div class="input">
+                    <label for="photoURL18">Photo URL 18</label>
+                    <input type="text" id="photoURL18" name="photoURL18">
+                </div>
+                <div class="input">
+                    <label for="photoURL19">Photo URL 19</label>
+                    <input type="text" id="photoURL19" name="photoURL19">
+                </div>
+                <div class="input">
+                    <label for="photoURL20">Photo URL 20</label>
+                    <input type="text" id="photoURL20" name="photoURL20">
+                </div>
+                <div class="input">
+                    <label for="photoURL21">Photo URL 21</label>
+                    <input type="text" id="photoURL21" name="photoURL21">
+                </div>
+                <div class="input">
+                    <label for="photoURL22">Photo URL 22</label>
+                    <input type="text" id="photoURL22" name="photoURL22">
+                </div>
+                <div class="input">
+                    <label for="photoURL23">Photo URL 23</label>
+                    <input type="text" id="photoURL23" name="photoURL23">
+                </div>
+                <div class="input">
+                    <label for="photoURL24">Photo URL 24</label>
+                    <input type="text" id="photoURL24" name="photoURL24">
+                </div>
+                <div class="input">
+                    <label for="photoURL25">Photo URL 25</label>
+                    <input type="text" id="photoURL25" name="photoURL25">
+                </div>
+                <h5>FLYER IMAGES:</h5>
+                <div class="input">
+                    <label for="flyerImgURL1">FLyer Img URL 1</label>
+                    <input type="text" id="flyerImgURL1" name="flyerImgURL1">
+                </div>
+                <div class="input">
+                    <label for="flyerImgURL2">FLyer Img URL 2</label>
+                    <input type="text" id="flyerImgURL2" name="flyerImgURL2">
+                </div>
+                <div class="input">
+                    <label for="flyerImgURL3">FLyer Img URL 3</label>
+                    <input type="text" id="flyerImgURL3" name="flyerImgURL3">
+                </div>
+                <div class="input">
+                    <label for="flyerImgURL4">FLyer Img URL 4</label>
+                    <input type="text" id="flyerImgURL4" name="flyerImgURL4">
+                </div>
+                <div class="input">
+                    <label for="flyerImgURL5">FLyer Img URL 5</label>
+                    <input type="text" id="flyerImgURL5" name="flyerImgURL5">
+                </div>
+                <div class="input">
+                    <label for="flyerImgURL6">FLyer Img URL 6</label>
+                    <input type="text" id="flyerImgURL6" name="flyerImgURL6">
+                </div>
+                <div class="input">
+                    <label for="flyerImgURL7">FLyer Img URL 7</label>
+                    <input type="text" id="flyerImgURL7" name="flyerImgURL7">
+                </div>
+                <div class="input">
+                    <label for="flyerImgURL8">FLyer Img URL 8</label>
+                    <input type="text" id="flyerImgURL8" name="flyerImgURL8">
+                </div>
+                <div class="input">
+                    <label for="flyerImgURL9">FLyer Img URL 9</label>
+                    <input type="text" id="flyerImgURL9" name="flyerImgURL9">
+                </div>
+                <div class="input">
+                    <label for="flyerImgURL10">FLyer Img URL 10</label>
+                    <input type="text" id="flyerImgURL10" name="flyerImgURL10">
+                </div>
+                <h5>CUSTOM URL</h5>
+                <div class="input">
+                    <label for="customURL">Custom URL</label>
+                    <input type="text" id="customURL" name="customURL">
+                </div>
+                <button type="submit">INSERT</button>
+            </form>
+        </section>
+        <section class="get" style="flex-grow: 100;">
+            <h3>Get Data</h3>
+            <div>
+                <h1>{{items.title}}</h1>
+                {{#each items }}
+                <article class="item">
+                    <h5>INFO:</h5>
+
+                    <div> TITLE:{{this.title}} </div>
+                    <div>DESCRIPTION:{{this.description}}</div>
+                    <div>NUM BEDS:{{this.numBeds}}</div>
+                    <div>NUM BATHS:{{this.numBaths}}</div>
+                    <div>SQUARE FEET:{{this.squareFeet}}</div>
+                    <div>ACRES:{{this.acres}}</div>
+                    <div>LISTING FEATURES:{{this.listingFeatures}}</div>
+                    <div>NIGHT RATES:{{this.nightRates}}</div>
+                    <div>MONTHLY RATES:{{this.monthlyRates}}</div>
+                    <h5>GALLERY IMAGES:</h5>
+
+                    <div>PHOTO URL1: {{this.photoURL1}}</div>
+                    <div>PHOTO URL2: {{this.photoURL2}}</div>
+                    <div>PHOTO URL3: {{this.photoURL3}}</div>
+                    <div>PHOTO URL4: {{this.photoURL4}}</div>
+                    <div>PHOTO URL5: {{this.photoURL5}}</div>
+                    <div>PHOTO URL6: {{this.photoURL6}}</div>
+                    <div>PHOTO URL7: {{this.photoURL7}}</div>
+                    <div>PHOTO URL8: {{this.photoURL8}}</div>
+                    <div>PHOTO URL9: {{this.photoURL9}}</div>
+                    <div>PHOTO URL10: {{this.photoURL10}}</div>
+                    <div>PHOTO URL11: {{this.photoURL11}}</div>
+                    <div>PHOTO URL12: {{this.photoURL12}}</div>
+                    <div>PHOTO URL13: {{this.photoURL13}}</div>
+                    <div>PHOTO URL14: {{this.photoURL14}}</div>
+                    <div>PHOTO URL15: {{this.photoURL15}}</div>
+                    <div>PHOTO URL16: {{this.photoURL16}}</div>
+                    <div>PHOTO URL17: {{this.photoURL17}}</div>
+                    <div>PHOTO URL18: {{this.photoURL18}}</div>
+                    <div>PHOTO URL19: {{this.photoURL19}}</div>
+                    <div>PHOTO URL20: {{this.photoURL20}}</div>
+                    <div>PHOTO URL21: {{this.photoURL21}}</div>
+                    <div>PHOTO URL22: {{this.photoURL22}}</div>
+                    <div>PHOTO URL23: {{this.photoURL23}}</div>
+                    <div>PHOTO URL24: {{this.photoURL24}}</div>
+                    <div>PHOTO URL25: {{this.photoURL25}}</div>
+                    <h5>FLYER IMAGES:</h5>
+
+                    <div>FLYER IMGURL1: {{this.flyerImgURL1}}</div>
+                    <div>FLYER IMGURL2: {{this.flyerImgURL2}}</div>
+                    <div>FLYER IMGURL3: {{this.flyerImgURL3}}</div>
+                    <div>FLYER IMGURL4: {{this.flyerImgURL4}}</div>
+                    <div>FLYER IMGURL5: {{this.flyerImgURL5}}</div>
+                    <div>FLYER IMGURL6: {{this.flyerImgURL6}}</div>
+                    <div>FLYER IMGURL7: {{this.flyerImgURL7}}</div>
+                    <div>FLYER IMGURL8: {{this.flyerImgURL8}}</div>
+                    <div>FLYER IMGURL9: {{this.flyerImgURL9}}</div>
+                    <div>FLYER IMGURL10: {{this.flyerImgURL10}}</div>
+                    <div>CUSTOMURL: {{this.customURL}}</div>
+                    <form action="/admin/delete" method="post">
+                        <div class="input">
+                            <label for="id">ID</label>
+                            <input type="text" id="id" name="id" value="{{this._id}}" readonly>
+                        </div>
+                        <button type="submit">DELETE</button>
+                    </form>
+                    <a href="/admin/{{this._id}}" role="button" class="btn btn-outline light tiny white-hover">Update</a>
+                </article>
+                {{/each}}
+            </div>
+        </section>
+    </div>
+</div>

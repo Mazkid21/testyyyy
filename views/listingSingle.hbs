@@ -1,0 +1,458 @@
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/slider.css">
+    <link rel="stylesheet" href="/css/singleUnit.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <script src="/js/slider.js"></script>
+    <script src="/js/modal.js"></script>
+    <script src="/js/singleListingGallery.js"></script>
+</head>
+<style>
+    /* Set the size of the div element that contains the map */
+    #map {
+
+        height: 350px;
+        width: 98%;
+        margin: auto;
+    }
+    }
+</style>
+
+<section id='works' class="s-works" style="    padding-bottom: 0px;">
+    {{#each property}}
+    <div class="imagegallery">
+        <div class="gallery-big"><img class="gallery-img" src="{{this.Media.0.MediaURL}}">
+            <div class="gallerypager"><a href="#" class="gallery-prev"><span>Prev</span></a> <a href="#" class="gallery-next"><span>Next</span></a>
+            </div>
+        </div>
+        <div class="gallerythumbs">
+            {{#each Media}}
+            <a href="{{this.MediaURL}}"><img src="{{this.MediaURL}}" width="100" height="62"></a>
+            {{/each}}
+        </div>
+    </div>
+    <main>
+        <section class="flex flex-around" style="    padding-bottom: 10px;">
+            <div class="boxShadow" id="homeInformation">
+
+                <a href=" #">
+                    <div class="partnerwrap homeInformationImage">
+                        <div class="partner">
+                            <div class="portrait"><img src="/images/b.jpg"></div>
+                            <h6>Call for appoitment!</h6>
+                            <p><strong>Brittanie Rockhill</strong></p>
+                            <p>Office: <a href="tel:9709258810">970.925.8810</a></p>
+                            <p>Mobile: <a href="tel:9703660891">970.366.0891</a></p>
+                        </div>
+                    </div>
+                </a>
+                {{!-- <div class="listing-contact-image">
+                    <img src="/images/b.jpg" alt="">
+                </div>
+                <div class="listing-contact-copy">
+                    <h6>Contact me for more info</h6>
+                    <hr>
+                </div> --}}
+
+
+
+
+                <div class="flex-center flex-between container">
+                    <div>
+                        <h2 id="list-price" style="margin-top: 0px; display: none;">{{this.ListPrice}}</h2>
+                        <h2 id="list-priceComma" style="margin-top: 0px;"></h2>
+                        {{!-- <span id="caps">2 YEAR LEASE REQUIRED</span> --}}
+                    </div>
+                    <div>
+                        {{!-- <span id="tag">BUY</span> --}}
+                    </div>
+                </div>
+                <br>
+                <div class="flex-center flex-between stats container">
+                    <p>Square Feet</p>
+                    <p>{{this.LivingArea}}</p>
+                </div>
+                <hr>
+                <div class="flex-center flex-between stats container">
+                    <p>Bedrooms</p>
+                    <p>{{this.BedroomsTotal}}</p>
+                </div>
+                <hr>
+                <div class="flex-center flex-between stats container">
+                    <p>Bathrooms</p>
+                    <p>{{#if this.BathroomsFull}}
+                        {{this.BathroomsFull}}
+                        Full
+                        {{/if}}
+                        {{#if this.BathroomsHalf}}
+                        {{this.BathroomsHalf}}
+                        Half
+                        {{/if}}
+                        {{#if this.BathroomsThreeQuater}}
+                        {{this.BathroomsThreeQuater}}
+                        Three Quarter
+                        {{/if}}
+                </div>
+                <hr>
+                <div class="flex-center flex-between stats container">
+                    <p>Pets</p>
+                    {{#if this.PetsAllowed}}
+                    <p>{{this.PetsAllowed}}</p>
+                    {{else}}
+                    <p>No</p>
+                    {{/if}}
+                </div>
+                <hr>
+                <div class="flex-center flex-between stats container">
+                    <p>Property Condition </p>
+                    <p>{{this.PropertyCondition}}</p>
+                </div>
+            </div>
+            <div class="boxShadow" id="chartInformation">
+                <div id="chartOne">
+                    <h2 style="    margin-top: 0px;">{{this.StreetNumber}} {{this.StreetName}} {{this.StreetSuffix}}</h2>
+                    {{this.TaxLegalDescription}}</h5>
+                    <p>{{this.PublicRemarks}}</p>
+                    <p style="    margin-bottom: 0px;">Year Built: {{this.YearBuilt}}</p>
+                    <p class="google-Coordinates-lng" style="display: none; ">{{this.Longitude}}</p>
+                    <p class="google-Coordinates-lat" style="display: none;">{{this.Latitude}}</p>
+
+                    <div id="map" class="boxShadow"></div>
+                </div>
+            </div>
+            <div id="chartTwo"></div>
+            </div>
+        </section>
+
+        <div id="modal-container">
+            <div class="modal-background">
+                <div class="modal">
+
+
+
+                    <div class="row contact-content modal-contact">
+
+                        <div class="contact-primary">
+
+                            <h3 class="h6">Send Us A Message</h3>
+
+                            <form name="contactForm" id="contactForm" method="post" action="" novalidate="novalidate">
+                                <fieldset>
+
+                                    <div class="form-field">
+                                        <input name="contactName" type="text" id="contactName" placeholder="Your Name"
+                                            value="" minlength="2" required="" aria-required="true" class="full-width">
+                                    </div>
+                                    <div class="form-field">
+                                        <input name="contactEmail" type="email" id="contactEmail" placeholder="Your Email"
+                                            value="" required="" aria-required="true" class="full-width">
+                                    </div>
+                                    <div class="form-field">
+                                        <input name="contactSubject" type="text" id="contactSubject" placeholder="Subject"
+                                            value="" class="full-width">
+                                    </div>
+                                    <div class="form-field">
+                                        <textarea name="contactMessage" id="contactMessage" placeholder="Your Message"
+                                            rows="10" cols="50" required="" aria-required="true" class="full-width"></textarea>
+                                    </div>
+                                    <div class="form-field">
+                                        <button class="full-width btn--primary">Submit</button>
+                                        <div class="submit-loader">
+                                            <div class="text-loader">Sending...</div>
+                                            <div class="s-loader">
+                                                <div class="bounce1"></div>
+                                                <div class="bounce2"></div>
+                                                <div class="bounce3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+
+                            <!-- contact-warning -->
+                            <div class="message-warning">
+                                Something went wrong. Please try again.
+                            </div>
+
+                            <!-- contact-success -->
+                            <div class="message-success">
+                                Your message was sent, thank you!<br>
+                            </div>
+
+                        </div> <!-- end contact-primary -->
+
+                        <div class="contact-secondary">
+                            <div class="contact-info">
+
+                                <h3 class="h6 hide-on-fullwidth">Contact Info</h3>
+
+                                <div class="cinfo">
+                                    <h5>Where to Find Us</h5>
+                                    <p>
+                                        520 E Durant Ave<br>
+                                        Aspen, CO<br>
+                                        81611
+                                    </p>
+                                </div>
+
+                                <div class="cinfo">
+                                    <h5>Email Us At</h5>
+                                    <p>
+                                        brittanie@brittanierockhill.com
+                                    </p>
+                                </div>
+
+                                <div class="cinfo">
+                                    <h5>Call Us At</h5>
+                                    <p>
+                                        Office: (970) 366 0891<br>
+                                        Mobile: (970) 366 0891<br>
+                                    </p>
+                                </div>
+                            </div> <!-- end contact-info -->
+                        </div> <!-- end contact-secondary -->
+
+                    </div> <!-- end contact-content -->
+
+
+
+                    <div id="close-x"><a>X</a></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {{/each}}
+    {{!-- <h3>Google Maps </h3> --}}
+    <!--The div element for the map -->
+
+
+    <script>
+        var coordinatesLAT = document.getElementsByClassName('google-Coordinates-lat');
+        var coordinatesLNG = document.getElementsByClassName('google-Coordinates-lng');
+        var long = parseFloat(coordinatesLNG[0].innerHTML);
+        var lat = parseFloat(coordinatesLAT[0].innerHTML);
+        // Initialize and add the map
+        // Initialize and add the map
+        console.log(lat);
+        console.log(long);
+        function initMap() {
+            // The location of Uluru
+            var uluru = { lat: lat, lng: long };
+            // The map, centered at Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), {
+                    zoom: 13, center: uluru, styles: [
+                        {
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#f5f5f5"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.icon",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#616161"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.text.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#f5f5f5"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "labels",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#bdbdbd"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#eeeeee"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.text",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#757575"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.park",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#e5e5e5"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.park",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#9e9e9e"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#ffffff"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.arterial",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#757575"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#dadada"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#616161"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "labels",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#9e9e9e"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#e5e5e5"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.station",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#eeeeee"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#c9c9c9"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#9e9e9e"
+                                }
+                            ]
+                        }
+                    ],
+                    mapTypeControlOptions: {
+                        mapTypeIds: [google.maps.MapTypeId.TERRAIN]
+                    },
+                    mapTypeId: google.maps.MapTypeId.TERRAIN
+                });
+            // The marker, positioned at Uluru
+            var marker = new google.maps.Marker({ position: uluru, map: map });
+            var theNumber = document.getElementById("list-price").innerHTML;
+            theNumber = Number(theNumber).toLocaleString();
+            console.log(theNumber);
+            var z = document.createElement('p'); // is a node
+            z.innerHTML = "$" + theNumber;
+            document.getElementById("list-priceComma").appendChild(z);
+        }
+
+
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYFXJkYOxxDT3jU1jb5DorpO5rWrPrD-o&callback=initMap">
+    </script>
+</section> <!-- end s-works -->

@@ -1,0 +1,176 @@
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/hover.css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,800,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/slider.css">
+    <script src="js/slider.js"></script>
+</head>
+
+<section id='works' class="s-works">
+
+    <div class="intro-wrap" style="padding: 15rem 0 10rem;">
+
+        <div class="row section-header has-bottom-sep light-sep" data-aos="fade-up">
+            <div class="col-full">
+                <h3 class="subhead">Recent Lisitings</h3>
+                <h1 class="display-2 display-2--light">We love what we do, check out some of our latest rentals</h1>
+                <a href="/listing" class="listingOption btn btn--stroke">
+                    CHECK OUT LISTING
+                </a>
+            </div>
+        </div> <!-- end section-header -->
+
+    </div> <!-- end intro-wrap -->
+    <div class="row section-header has-bottom-sep light-sep" data-aos="fade-up">
+        <form class="filter-form" action="/rentals-search" method="post">
+            <div class="">
+
+                <section class="range-slider">
+                    <label> Price: </label>
+
+                    <div>
+                        <label class="rangeValues"></label>
+                        <input id="sliderMin" value="1000" min="1000" max="100000" name="minPrice" step="100" type="range">
+                        <input id="sliderMax" value="500000" min="100000" max="500000" name="maxPrice" step="100" type="range">
+                    </div>
+                </section>
+
+                {{!-- <input id="minPrice" type="range" class="col-sm-2" min="100" max="30000" step="50" placeholder="MIN PRICE"></input>
+                <input id="maxPrice" type="range" class="col-sm-2" min="100" max="30000" step="50" placeholder="Max PRICE"></input>
+                --}}
+            </div>
+            <div class="">
+                <label>Bedrooms:</label>
+                <div class="input-number">
+                    <input id="numBed" type="number" name="numBed" value="{{numBed}}" min="1" max="10" />
+
+                </div>
+            </div>
+            <div class="">
+                <label>Bathrooms:</label>
+                <div class="input-number">
+                    <input id="numBath" type="number" name="numBath" value="{{numBath}}" min="1" max="5" />
+
+                </div>
+            </div>
+            {{!-- <select name="neighborhood">
+                <option disabled selected value> -- Select a Neighborhood -- </option>
+                <option value="b__30312d43656e7472616c20436f7265">Central Core</option>
+                <option value="b__30312d4561737420417370656e">East Aspen</option>
+                <option value="b__30312d4d634c61696e20466c617473">Mclain Flats</option>
+                <option value="b__30312d526564204d6f756e7461696e">Red Mounain</option>
+                <option value="b__30312d536d7567676c6572">Smuggler</option>
+                <option value="b__30312d5765737420417370656e">West Aspen</option>
+                <option value="b__30312d5765737420456e64">West End</option>
+            </select>--}} <input class="filter-form-button" type="submit" value="SEARCH" />
+
+
+        </form>
+    </div>
+    <div class="row works-content">
+        <div class="col-full masonry-wrap">
+            <div class="masonry">
+                {{#if error}}
+                <h1>ERRRORRR</h1>
+                {{else}}
+                {{!-- MONGO RENTALS --}}
+                {{#each items}}
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio__thumb">
+                        {{!-- hover card --}}
+                        <div class="content">
+                            <div class="grid">
+                                <figure class="effect-zoe">
+                                    <a href="/custom/{{this.customURL}}">
+                                        <img src="{{this.photoURL1}}" alt="img25" />
+                                    </a>
+                                    <figcaption>
+                                        <div class="fig-left">
+                                            <div class="fig-left-top">
+                                                <p>{{this.title}}</p>
+                                            </div>
+                                            <div class="fig-left-bottom">
+                                                <hr>
+                                                <p> {{this.numBeds}} Bedrooms |
+                                                    Bathroooms | SF
+                                                </p>
+                                                <a href="/custom/{{this.customURL}}" role="button" class="btn btn-outline light tiny white-hover">Details</a>
+                                            </div>
+                                        </div>
+                                        <div class="fig-right">
+                                            <p>
+                                                {{this.monthlyRates}}
+                                            </p>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end masonry__brick FOR MONGO RENTALS -->
+                {{/each}}
+                {{!-- MLS RENTALS --}}
+                {{#each property}}
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio__thumb">
+                        {{!-- hover card --}}
+                        <div class="content">
+                            <div class="grid">
+                                <figure class="effect-zoe">
+                                    <a href="/rentals-search/{{this.ListingKey}}">
+                                        <img src="{{this.Media.0.MediaURL}}" alt="img25" />
+                                    </a>
+                                    <figcaption>
+                                        <div class="fig-left">
+                                            <div class="fig-left-top">
+                                                <p>{{this.StreetNumber}},
+                                                    {{this.StreetName}}
+                                                    {{this.StreetSuffix}}</p>
+                                            </div>
+                                            <div class="fig-left-bottom">
+                                                <hr>
+                                                <p> {{this.BedroomsTotal}} Bedrooms |
+                                                    Bathroooms {{#if
+                                                    this.BathroomsFull}}
+                                                    Full:
+                                                    {{this.BathroomsFull}},
+                                                    {{/if}}
+                                                    {{#if this.BathroomsHalf}}
+                                                    Half:
+                                                    {{this.BathroomsHalf}}
+                                                    {{/if}}
+                                                    {{#if this.BathroomsThreeQuater}}
+                                                    Three Quarter:
+                                                    , {{this.BathroomsThreeQuater}}
+                                                    {{/if}} | {{this.LivingArea}} SF
+                                                </p>
+                                                <a href="/rentals-search/{{this.ListingKey}}" role="button" class="btn btn-outline light tiny white-hover">Details</a>
+                                            </div>
+                                        </div>
+                                        <div class="fig-right">
+                                            <p>
+                                                &#36;{{this.ListPrice}}
+                                            </p>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end masonry__brick FOR MLS RENTALS -->
+                {{/each}}
+                {{/if}}
+            </div> <!-- end masonry -->
+        </div> <!-- end col-full -->
+    </div> <!-- end works-content -->
+
+</section> <!-- end s-works -->
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/js/listing.js"></script>

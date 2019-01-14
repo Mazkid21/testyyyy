@@ -1,0 +1,31 @@
+{{#each items}}
+<p>{{this.userInfo.title}}</p>
+<p>{{this.userInfo.description}}</p>
+<p>{{this.userInfo.authors}}</p>
+<p>{{this.userInfo.smallThumbnail}}</p>
+{{/each}}
+<section class="insert" style="flex-grow: 1;">
+    <h3>Insert Data</h3>
+    <form action="/users/insert" method="post">
+        <h5>INFO:</h5>
+        <div class="input">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title">
+        </div>
+        <div class="input">
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description">
+        </div>
+        <div class="input">
+            <label for="authors">authors</label>
+            <input type="text" id="authors" name="authors">
+        </div>
+        <div class="input">
+            <label for="smallThumbnail">small thumbanil</label>
+            <input type="text" id="smallThumbnail" name="smallThumbnail">
+        </div>
+        <div class="input">
+            <input type="text" id="id" name="id" value="{{id}}">
+        </div>
+        <button type="submit">INSERT</button>
+    </form>

@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/videos.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+<section id='works' class="s-works video-gallery">
+    <h1 class="section-header">Video Gallery</h1>
+    <div class="section-header-underline"></div>
+    <div class="">
+        {{#each videos}}
+        {{!-- videos --}}
+        <div class="gallery-item">
+            <img src="{{this.imgURL}}" alt="Editor Reel" />
+            <div class="gallery-item-caption">
+                <div>
+                    <h2> {{this.title}}</h2>
+                    <p>{{this.description}}</p>
+                </div>
+                <a class="video" data-video="{{this.videoURL}}" data-toggle="modal" data-target="#videoModal"></a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</section>
+{{!-- MODAL --}}
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <iframe width="100%" height="350" src="" frameborder="0" allow="fullscreen" allowfullscreen></iframe>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(".video").click(function () {
+            var theModal = $(this).data("target"),
+                videoSRC = $(this).attr("data-video"),
+                videoSRCauto = videoSRC + "?modestbranding=1&rel=0&controls=0&showinfo=0&html5=1&autoplay=1";
+            $(theModal + ' iframe').attr('src', videoSRCauto);
+            $(theModal).on('click', function () {
+                $(theModal + ' iframe').attr('src', videoSRC);
+            });
+        });
+    });
+</script>
+</div> <!-- end works-content -->

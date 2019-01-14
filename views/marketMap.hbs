@@ -1,0 +1,1142 @@
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/slider.css">
+    <link rel="stylesheet" href="/css/singleUnit.css">
+
+    <script src="/js/slider.js"></script>
+    <script src="/js/singleListingGallery.js"></script>
+</head>
+<style>
+    /* Set the size of the div element that contains the map */
+    #map {
+
+        position: absolute;
+        overflow: hidden !important;
+        height: 100vh;
+        width: 100vw;
+        /* margin-top: 3em; */
+        border-radius: 4px;
+
+
+    }
+
+    /*style the INFO WINDOW */
+    .gm-style .gm-style-iw {
+        background-color: #252525 !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 500px !important;
+        height: 200px !important;
+        min-height: 120px !important;
+        padding-top: 10px;
+        display: inline-block;
+        text-align: center;
+        overflow: auto !important;
+
+    }
+
+    .gm-style-iw {}
+
+    /*style the p tag*/
+    .gm-style .gm-style-iw #google-popup p {}
+
+
+    /*style the arrow*/
+    .gm-style div div div div div div div div {
+
+        color: #fff;
+
+        font-size: 15px;
+
+        width: 448px;
+
+    }
+
+    /* END GOOGLE MAPS */
+
+    /* START CODEPEN MAP */
+
+
+    .interactive-map {
+        display: block;
+        width: 100%;
+        margin: 2% auto;
+        max-width: 1200px;
+        max-height: 800px;
+
+        position: relative;
+        border-radius: 10px;
+    }
+
+    .interactive-map>img {
+        vertical-align: top;
+        position: relative;
+        width: 97%;
+        border-radius: 10px;
+    }
+
+    .map-point i {
+        font-size: 2.2vw;
+        color: #b92020;
+    }
+
+    .map-point img,
+    .map-point span {
+        cursor: pointer;
+        outline: none;
+        z-index: 2;
+        position: absolute;
+    }
+
+    .map-point {
+        transition: opacity .25s ease-in-out;
+        -moz-transition: opacity .25s ease-in-out;
+        -webkit-transition: opacity .25s ease-in-out;
+    }
+
+
+    /* Tooltip CSS Start */
+
+    .tooltip {
+        display: block;
+        position: absolute;
+        z-index: 0;
+    }
+
+
+    /* Gap filler */
+
+    .tooltip-item::after {
+        content: '';
+        position: absolute;
+        width: 360px;
+        height: 20px;
+        bottom: 100%;
+        left: 50%;
+        pointer-events: none;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+
+    .tooltip:hover .tooltip-item::after {
+        pointer-events: auto;
+    }
+
+
+    /* Tooltip */
+
+    .tooltip-content {
+        position: absolute;
+        width: 256px;
+        left: -28%;
+
+        bottom: 100%;
+        text-align: left;
+        font-size: 0.765em;
+        line-height: 1.4;
+        box-shadow: -5px -5px 15px rgba(48, 54, 61, 0.2);
+        background: #2a3035;
+        opacity: 0;
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .tooltip-effect-4 .tooltip-content {
+        -webkit-transform-origin: 50% 100%;
+        transform-origin: 50% 100%;
+        -webkit-transform: scale3d(0.7, 0.3, 1);
+        transform: scale3d(0.7, 0.3, 1);
+        -webkit-transition: opacity 0.2s, -webkit-transform 0.2s;
+        transition: opacity 0.2s, transform 0.2s;
+    }
+
+
+    .tooltip:hover .tooltip-content {
+        pointer-events: auto;
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0, 0);
+        transform: translate3d(10, 0, 0) rotate3d(0, 0, 0, 0);
+    }
+
+    .tooltip:hover {
+        z-index: 9999;
+    }
+
+
+    /* Arrow */
+
+    .tooltip-content::after {
+        content: '';
+        top: 100%;
+        left: 50%;
+        border: solid transparent;
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: transparent;
+        border-top-color: #2a3035;
+        border-width: 10px;
+        margin-left: -10px;
+        z-index: 99999;
+    }
+
+
+    /* Tooltip content*/
+
+    .tooltip-text {
+        font-size: 1.2em;
+        line-height: 1.35;
+        display: block;
+        font-family: 'Open Sans';
+        text-align: center;
+
+        color: #fff;
+        position: relative !important;
+    }
+
+    .clearfix {
+        clear: both;
+    }
+
+    .tooltip:hover {
+        z-index: 9999;
+    }
+
+
+    /* Arrow */
+
+    .tooltip-content2::after {
+        content: '';
+        top: 100%;
+        left: 50%;
+        border: solid transparent;
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: transparent;
+        border-top-color: #2a3035;
+        border-width: 10px;
+        margin-left: -10px;
+        z-index: 99999;
+    }
+</style>
+
+<section id='works' class="s-works" style=" padding-top: 23px;">
+
+    <!--The div element for the map -->
+    <div class="boxShadow" id="map"></div>
+    <div style="display: none">
+        {{#each smugglerData1}}
+        <p id="smugglerActiveListings"> {{this.ActiveListings}}</p>
+        <p id="smugglerNewListings"> {{this.NewListings}}</p>
+        <p id="smugglerPendedListings"> {{this.PendedListings}}</p>
+        <p id="smugglerSoldListings"> {{this.SoldListings}}</p>
+        <p id="smugglerActiveListings-dates"> {{this.Dates}}</p>
+        {{/each}}
+
+        {{#each smugglerData2}}
+        <p id="smugglerAbsorbtion"> {{this.AbsorptionRate}}</p>
+        {{/each}}
+
+        {{#each smugglerData3}}
+        <p id="smugglerActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+        <p id="smugglerNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+        <p id="smugglerPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+        <p id="smugglerSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+        <p id="smugglerSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+        <p id="smugglerActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+        <p id="smugglerNewMedianPrice">{{this.NewMedianListPrice}}</p>
+        <p id="smugglerPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+        <p id="smugglerSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+        <p id="smugglerSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+        <p id="">{{/each}}
+
+
+            {{#each smugglerData4}}
+
+            <p id="smugglerSaleToOriginalListPriceRatio"> {{this.SaleToOriginalListPriceRatio}}</p>
+            <p id="sumgglerSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+            {{/each}}
+
+            {{#each smugglerData5}}
+            <p id="smugglerAverageDom"> {{this.AverageDom}}</p>
+            <p id="smugglerAverageCdom"> {{this.AverageCdom}}</p>
+            {{/each}}
+
+            {{#each smugglerData6}}
+            <p id="smugglerActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+            <p id="smugglerNewListVolume"> {{this.NewListVolume}}</p>
+
+            <p id="smugglerPendedListVolume"> {{this.PendedListVolume}}</p>
+
+            <p id="smugglerSoldListVolume"> {{this.SoldListVolume}}</p>
+
+            <p id="smugglerSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+            {{/each}}
+
+
+            {{#each centralCoreData1}}
+            <p id="centralCoreActiveListings"> {{this.ActiveListings}}</p>
+            <p id="centralCoreNewListings"> {{this.NewListings}}</p>
+            <p id="centralCorePendedListings"> {{this.PendedListings}}</p>
+            <p id="centralCoreSoldListings"> {{this.SoldListings}}</p>
+            <p id="centralCoreActiveListings-dates"> {{this.Dates}}</p>
+            {{/each}}
+
+            {{#each centralCoreData2}}
+            <p id="centralCoreAbsorbtion"> {{this.AbsorptionRate}}</p>
+            {{/each}}
+
+            {{#each centralCoreData3}}
+            <p id="centralCoreActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+            <p id="centralCoreNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+            <p id="centralCorePendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+            <p id="centralCoreSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+            <p id="centralCoreSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+            <p id="centralCoreActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+            <p id="centralCoreNewMedianPrice">{{this.NewMedianListPrice}}</p>
+            <p id="centralCorePendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+            <p id="centralCoreSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+            <p id="centralCoreSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+            <p id="">{{/each}}
+
+
+                {{#each centralCoreData4}}
+
+                <p id="centralCoreSaleToOriginalListPriceRatio"> {{this.SaleToOriginalListPriceRatio}}</p>
+                <p id="centralCoreSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+                {{/each}}
+
+                {{#each centralCoreData5}}
+                <p id="centralCoreAverageDom"> {{this.AverageDom}}</p>
+                <p id="centralCoreAverageCdom"> {{this.AverageCdom}}</p>
+                {{/each}}
+
+                {{#each centralCoreData6}}
+                <p id="centralCoreActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                <p id="centralCoreNewListVolume"> {{this.NewListVolume}}</p>
+
+                <p id="centralCorePendedListVolume"> {{this.PendedListVolume}}</p>
+
+                <p id="centralCoreSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                <p id="centralCoreSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                {{/each}}
+
+                {{#each westEndData1}}
+                <p id="westEndActiveListings"> {{this.ActiveListings}}</p>
+                <p id="westEndNewListings"> {{this.NewListings}}</p>
+                <p id="westEndPendedListings"> {{this.PendedListings}}</p>
+                <p id="westEndSoldListings"> {{this.SoldListings}}</p>
+                <p id="westEndActiveListings-dates"> {{this.Dates}}</p>
+                {{/each}}
+
+                {{#each westEndData2}}
+                <p id="westEndAbsorbtion"> {{this.AbsorptionRate}}</p>
+                {{/each}}
+
+                {{#each westEndData3}}
+                <p id="westEndActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                <p id="westEndNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                <p id="westEndPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                <p id="westEndSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                <p id="westEndSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                <p id="westEndActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                <p id="westEndNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                <p id="westEndPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                <p id="westEndSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                <p id="westEndSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                <p id="">{{/each}}
+
+
+                    {{#each westEndData4}}
+
+                    <p id="westEndSaleToOriginalListPriceRatio"> {{this.SaleToOriginalListPriceRatio}}</p>
+                    <p id="westEndSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+                    {{/each}}
+
+                    {{#each westEndData5}}
+                    <p id="westEndAverageDom"> {{this.AverageDom}}</p>
+                    <p id="westEndAverageCdom"> {{this.AverageCdom}}</p>
+                    {{/each}}
+
+                    {{#each westEndData6}}
+                    <p id="westEndActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                    <p id="westEndNewListVolume"> {{this.NewListVolume}}</p>
+
+                    <p id="westEndPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                    <p id="westEndSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                    <p id="westEndSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                    {{/each}}
+
+                    {{#each eastAspenData1}}
+                    <p id="eastAspenActiveListings"> {{this.ActiveListings}}</p>
+                    <p id="eastAspenNewListings"> {{this.NewListings}}</p>
+                    <p id="eastAspenPendedListings"> {{this.PendedListings}}</p>
+                    <p id="eastAspenSoldListings"> {{this.SoldListings}}</p>
+                    <p id="eastAspenActiveListings-dates"> {{this.Dates}}</p>
+                    {{/each}}
+
+                    {{#each eastAspenData2}}
+                    <p id="eastAspenAbsorbtion"> {{this.AbsorptionRate}}</p>
+                    {{/each}}
+
+                    {{#each eastAspenData3}}
+                    <p id="eastAspenActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                    <p id="eastAspenNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                    <p id="eastAspenPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                    <p id="eastAspenSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                    <p id="eastAspenSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                    <p id="eastAspenActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                    <p id="eastAspenNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                    <p id="eastAspenPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                    <p id="eastAspenSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                    <p id="eastAspenSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                    <p id="">{{/each}}
+
+
+                        {{#each eastAspenData4}}
+
+                        <p id="eastAspenSaleToOriginalListPriceRatio"> {{this.SaleToOriginalListPriceRatio}}</p>
+                        <p id="eastAspenSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+                        {{/each}}
+
+                        {{#each eastAspenData5}}
+                        <p id="eastAspenAverageDom"> {{this.AverageDom}}</p>
+                        <p id="eastAspenAverageCdom"> {{this.AverageCdom}}</p>
+                        {{/each}}
+
+                        {{#each eastAspenData6}}
+                        <p id="eastAspenActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                        <p id="eastAspenNewListVolume"> {{this.NewListVolume}}</p>
+
+                        <p id="eastAspenPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                        <p id="eastAspenSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                        <p id="eastAspenSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                        {{/each}}
+
+                        {{#each redMtnData1}}
+                        <p id="redMtnActiveListings"> {{this.ActiveListings}}</p>
+                        <p id="redMtnNewListings"> {{this.NewListings}}</p>
+                        <p id="redMtnPendedListings"> {{this.PendedListings}}</p>
+                        <p id="redMtnSoldListings"> {{this.SoldListings}}</p>
+                        <p id="redMtnActiveListings-dates"> {{this.Dates}}</p>
+                        {{/each}}
+
+                        {{#each redMtnData2}}
+                        <p id="redMtnAbsorbtion"> {{this.AbsorptionRate}}</p>
+                        {{/each}}
+
+                        {{#each redMtnData3}}
+                        <p id="redMtnActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                        <p id="redMtnNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                        <p id="redMtnPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                        <p id="redMtnSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                        <p id="redMtnSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                        <p id="redMtnActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                        <p id="redMtnNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                        <p id="redMtnPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                        <p id="redMtnSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                        <p id="redMtnSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                        <p id="">{{/each}}
+
+
+                            {{#each redMtnData4}}
+
+                            <p id="redMtnSaleToOriginalListPriceRatio"> {{this.SaleToOriginalListPriceRatio}}</p>
+                            <p id="redMtnSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+                            {{/each}}
+
+                            {{#each redMtnData5}}
+                            <p id="redMtnAverageDom"> {{this.AverageDom}}</p>
+                            <p id="redMtnAverageCdom"> {{this.AverageCdom}}</p>
+                            {{/each}}
+
+                            {{#each redMtnData6}}
+                            <p id="redMtnActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                            <p id="redMtnNewListVolume"> {{this.NewListVolume}}</p>
+
+                            <p id="redMtnPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                            <p id="redMtnSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                            <p id="redMtnSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                            {{/each}}
+
+
+                            {{#each westAspenData1}}
+                            <p id="westAspenActiveListings"> {{this.ActiveListings}}</p>
+                            <p id="westAspenNewListings"> {{this.NewListings}}</p>
+                            <p id="westAspenPendedListings"> {{this.PendedListings}}</p>
+                            <p id="westAspenSoldListings"> {{this.SoldListings}}</p>
+                            <p id="westAspenActiveListings-dates"> {{this.Dates}}</p>
+                            {{/each}}
+
+                            {{#each westAspenData2}}
+                            <p id="westAspenAbsorbtion"> {{this.AbsorptionRate}}</p>
+                            {{/each}}
+
+                            {{#each westAspenData3}}
+                            <p id="westAspenActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                            <p id="westAspenNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                            <p id="westAspenPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                            <p id="westAspenSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                            <p id="westAspenSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                            <p id="westAspenActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                            <p id="westAspenNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                            <p id="westAspenPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                            <p id="westAspenSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                            <p id="westAspenSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                            <p id="">{{/each}}
+
+
+                                {{#each westAspenData4}}
+
+                                <p id="westAspenSaleToOriginalListPriceRatio"> {{this.SaleToOriginalListPriceRatio}}</p>
+                                <p id="westAspenSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+                                {{/each}}
+
+                                {{#each westAspenData5}}
+                                <p id="westAspenAverageDom"> {{this.AverageDom}}</p>
+                                <p id="westAspenAverageCdom"> {{this.AverageCdom}}</p>
+                                {{/each}}
+
+                                {{#each westAspenData6}}
+                                <p id="westAspenActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                                <p id="westAspenNewListVolume"> {{this.NewListVolume}}</p>
+
+                                <p id="westAspenPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                                <p id="westAspenSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                                <p id="westAspenSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                                {{/each}}
+
+                                {{#each mclainFlatsData1}}
+                                <p id="mclainFlatsActiveListings"> {{this.ActiveListings}}</p>
+                                <p id="mclainFlatsNewListings"> {{this.NewListings}}</p>
+                                <p id="mclainFlatsPendedListings"> {{this.PendedListings}}</p>
+                                <p id="mclainFlatsSoldListings"> {{this.SoldListings}}</p>
+                                <p id="mclainFlatsActiveListings-dates"> {{this.Dates}}</p>
+                                {{/each}}
+
+                                {{#each mclainFlatsData2}}
+                                <p id="mclainFlatsAbsorbtion"> {{this.AbsorptionRate}}</p>
+                                {{/each}}
+
+                                {{#each mclainFlatsData3}}
+                                <p id="mclainFlatsActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                                <p id="mclainFlatsNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                                <p id="mclainFlatsPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                                <p id="mclainFlatsSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                                <p id="mclainFlatsSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                                <p id="mclainFlatsActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                                <p id="mclainFlatsNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                                <p id="mclainFlatsPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                                <p id="mclainFlatsSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                                <p id="mclainFlatsSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                                <p id="">{{/each}}
+
+
+                                    {{#each mclainFlatsData4}}
+
+                                    <p id="mclainFlatsSaleToOriginalListPriceRatio">
+                                        {{this.SaleToOriginalListPriceRatio}}</p>
+                                    <p id="mclainFlatsSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+                                    {{/each}}
+
+                                    {{#each mclainFlatsData5}}
+                                    <p id="mclainFlatsAverageDom"> {{this.AverageDom}}</p>
+                                    <p id="mclainFlatsAverageCdom"> {{this.AverageCdom}}</p>
+                                    {{/each}}
+
+                                    {{#each mclainFlatsData6}}
+                                    <p id="mclainFlatsActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                                    <p id="mclainFlatsNewListVolume"> {{this.NewListVolume}}</p>
+
+                                    <p id="mclainFlatsPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                                    <p id="mclainFlatsSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                                    <p id="mclainFlatsSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                                    {{/each}}
+
+
+                                    {{#each snowmassVillageData1}}
+                                    <p id="snowmassVillageActiveListings"> {{this.ActiveListings}}</p>
+                                    <p id="snowmassVillageNewListings"> {{this.NewListings}}</p>
+                                    <p id="snowmassVillagePendedListings"> {{this.PendedListings}}</p>
+                                    <p id="snowmassVillageSoldListings"> {{this.SoldListings}}</p>
+                                    <p id="snowmassVillageActiveListings-dates"> {{this.Dates}}</p>
+                                    {{/each}}
+
+                                    {{#each snowmassVillageData2}}
+                                    <p id="snowmassVillageAbsorbtion"> {{this.AbsorptionRate}}</p>
+                                    {{/each}}
+
+                                    {{#each snowmassVillageData3}}
+                                    <p id="snowmassVillageActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                                    <p id="snowmassVillageNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                                    <p id="snowmassVillagePendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                                    <p id="snowmassVillageSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                                    <p id="snowmassVillageSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                                    <p id="snowmassVillageActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                                    <p id="snowmassVillageNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                                    <p id="snowmassVillagePendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                                    <p id="snowmassVillageSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                                    <p id="snowmassVillageSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                                    <p id="">{{/each}}
+
+
+                                        {{#each snowmassVillageData4}}
+
+                                        <p id="snowmassVillageSaleToOriginalListPriceRatio">
+                                            {{this.SaleToOriginalListPriceRatio}}</p>
+                                        <p id="snowmassVillageSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+                                        {{/each}}
+
+                                        {{#each snowmassVillageData5}}
+                                        <p id="snowmassVillageAverageDom"> {{this.AverageDom}}</p>
+                                        <p id="snowmassVillageAverageCdom"> {{this.AverageCdom}}</p>
+                                        {{/each}}
+
+                                        {{#each snowmassVillageData6}}
+                                        <p id="snowmassVillageActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                                        <p id="snowmassVillageNewListVolume"> {{this.NewListVolume}}</p>
+
+                                        <p id="snowmassVillagePendedListVolume"> {{this.PendedListVolume}}</p>
+
+                                        <p id="snowmassVillageSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                                        <p id="snowmassVillageSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                                        {{/each}}
+
+                                        {{#each brushCreekData1}}
+                                        <p id="brushCreekActiveListings"> {{this.ActiveListings}}</p>
+                                        <p id="brushCreekNewListings"> {{this.NewListings}}</p>
+                                        <p id="brushCreekPendedListings"> {{this.PendedListings}}</p>
+                                        <p id="brushCreekSoldListings"> {{this.SoldListings}}</p>
+                                        <p id="brushCreekActiveListings-dates"> {{this.Dates}}</p>
+                                        {{/each}}
+
+                                        {{#each brushCreekData2}}
+                                        <p id="brushCreekAbsorbtion"> {{this.AbsorptionRate}}</p>
+                                        {{/each}}
+
+                                        {{#each brushCreekData3}}
+                                        <p id="brushCreekActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                                        <p id="brushCreekNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                                        <p id="brushCreekPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                                        <p id="brushCreekSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                                        <p id="brushCreekSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                                        <p id="brushCreekActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                                        <p id="brushCreekNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                                        <p id="brushCreekPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                                        <p id="brushCreekSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                                        <p id="brushCreekSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                                        <p id="">{{/each}}
+
+
+                                            {{#each brushCreekData4}}
+
+                                            <p id="brushCreekSaleToOriginalListPriceRatio">
+                                                {{this.SaleToOriginalListPriceRatio}}</p>
+                                            <p id="brushCreekSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+                                            {{/each}}
+
+                                            {{#each brushCreekData5}}
+                                            <p id="brushCreekAverageDom"> {{this.AverageDom}}</p>
+                                            <p id="brushCreekAverageCdom"> {{this.AverageCdom}}</p>
+                                            {{/each}}
+
+                                            {{#each brushCreekData6}}
+                                            <p id="brushCreekActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                                            <p id="brushCreekNewListVolume"> {{this.NewListVolume}}</p>
+
+                                            <p id="brushCreekPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                                            <p id="brushCreekSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                                            <p id="brushCreekSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                                            {{/each}}
+
+                                            {{#each woodyCreekData1}}
+                                            <p id="woodyCreekActiveListings"> {{this.ActiveListings}}</p>
+                                            <p id="woodyCreekNewListings"> {{this.NewListings}}</p>
+                                            <p id="woodyCreekPendedListings"> {{this.PendedListings}}</p>
+                                            <p id="woodyCreekSoldListings"> {{this.SoldListings}}</p>
+                                            <p id="woodyCreekActiveListings-dates"> {{this.Dates}}</p>
+                                            {{/each}}
+
+                                            {{#each woodyCreekData2}}
+                                            <p id="woodyCreekAbsorbtion"> {{this.AbsorptionRate}}</p>
+                                            {{/each}}
+
+                                            {{#each woodyCreekData3}}
+                                            <p id="woodyCreekActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                                            <p id="woodyCreekNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                                            <p id="woodyCreekPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                                            <p id="woodyCreekSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                                            <p id="woodyCreekSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                                            <p id="woodyCreekActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                                            <p id="woodyCreekNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                                            <p id="woodyCreekPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                                            <p id="woodyCreekSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                                            <p id="woodyCreekSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                                            <p id="">{{/each}}
+
+
+                                                {{#each woodyCreekData4}}
+
+                                                <p id="woodyCreekSaleToOriginalListPriceRatio">
+                                                    {{this.SaleToOriginalListPriceRatio}}</p>
+                                                <p id="woodyCreekSaleToListPriceRatio"> {{this.SaleToListPriceRatio}}</p>
+
+                                                {{/each}}
+
+                                                {{#each woodyCreekData5}}
+                                                <p id="woodyCreekAverageDom"> {{this.AverageDom}}</p>
+                                                <p id="woodyCreekAverageCdom"> {{this.AverageCdom}}</p>
+                                                {{/each}}
+
+                                                {{#each woodyCreekData6}}
+                                                <p id="woodyCreekActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                                                <p id="woodyCreekNewListVolume"> {{this.NewListVolume}}</p>
+
+                                                <p id="woodyCreekPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                                                <p id="woodyCreekSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                                                <p id="woodyCreekSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                                                {{/each}}
+
+
+                                                {{#each oldSnowmassData1}}
+                                                <p id="oldSnowmassActiveListings"> {{this.ActiveListings}}</p>
+                                                <p id="oldSnowmassNewListings"> {{this.NewListings}}</p>
+                                                <p id="oldSnowmassPendedListings"> {{this.PendedListings}}</p>
+                                                <p id="oldSnowmassSoldListings"> {{this.SoldListings}}</p>
+                                                <p id="oldSnowmassActiveListings-dates"> {{this.Dates}}</p>
+                                                {{/each}}
+
+                                                {{#each oldSnowmassData2}}
+                                                <p id="oldSnowmassAbsorbtion"> {{this.AbsorptionRate}}</p>
+                                                {{/each}}
+
+                                                {{#each oldSnowmassData3}}
+                                                <p id="oldSnowmassActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                                                <p id="oldSnowmassNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                                                <p id="oldSnowmassPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                                                <p id="oldSnowmassSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                                                <p id="oldSnowmassSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                                                <p id="oldSnowmassActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                                                <p id="oldSnowmassNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                                                <p id="oldSnowmassPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                                                <p id="oldSnowmassSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                                                <p id="oldSnowmassSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                                                <p id="">{{/each}}
+
+
+                                                    {{#each oldSnowmassData4}}
+
+                                                    <p id="oldSnowmassSaleToOriginalListPriceRatio">
+                                                        {{this.SaleToOriginalListPriceRatio}}</p>
+                                                    <p id="oldSnowmassSaleToListPriceRatio">
+                                                        {{this.SaleToListPriceRatio}}</p>
+
+                                                    {{/each}}
+
+                                                    {{#each oldSnowmassData5}}
+                                                    <p id="oldSnowmassAverageDom"> {{this.AverageDom}}</p>
+                                                    <p id="oldSnowmassAverageCdom"> {{this.AverageCdom}}</p>
+                                                    {{/each}}
+
+                                                    {{#each oldSnowmassData6}}
+                                                    <p id="oldSnowmassActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                                                    <p id="oldSnowmassNewListVolume"> {{this.NewListVolume}}</p>
+
+                                                    <p id="oldSnowmassPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                                                    <p id="oldSnowmassSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                                                    <p id="oldSnowmassSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                                                    {{/each}}
+
+
+
+                                                    {{#each basaltProperData1}}
+                                                    <p id="basaltProperActiveListings"> {{this.ActiveListings}}</p>
+                                                    <p id="basaltProperNewListings"> {{this.NewListings}}</p>
+                                                    <p id="basaltProperPendedListings"> {{this.PendedListings}}</p>
+                                                    <p id="basaltProperSoldListings"> {{this.SoldListings}}</p>
+                                                    <p id="basaltProperActiveListings-dates"> {{this.Dates}}</p>
+                                                    {{/each}}
+
+                                                    {{#each basaltProperData2}}
+                                                    <p id="basaltProperAbsorbtion"> {{this.AbsorptionRate}}</p>
+                                                    {{/each}}
+
+                                                    {{#each basaltProperData3}}
+                                                    <p id="basaltProperActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                                                    <p id="basaltProperNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                                                    <p id="basaltProperPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                                                    <p id="basaltProperSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                                                    <p id="basaltProperSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                                                    <p id="basaltProperActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                                                    <p id="basaltProperNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                                                    <p id="basaltProperPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                                                    <p id="basaltProperSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                                                    <p id="basaltProperSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                                                    <p id="">{{/each}}
+
+
+                                                        {{#each basaltProperData4}}
+
+                                                        <p id="basaltProperSaleToOriginalListPriceRatio">
+                                                            {{this.SaleToOriginalListPriceRatio}}</p>
+                                                        <p id="basaltProperSaleToListPriceRatio">
+                                                            {{this.SaleToListPriceRatio}}</p>
+
+                                                        {{/each}}
+
+                                                        {{#each basaltProperData5}}
+                                                        <p id="basaltProperAverageDom"> {{this.AverageDom}}</p>
+                                                        <p id="basaltProperAverageCdom"> {{this.AverageCdom}}</p>
+                                                        {{/each}}
+
+                                                        {{#each basaltProperData6}}
+                                                        <p id="basaltProperActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                                                        <p id="basaltProperNewListVolume"> {{this.NewListVolume}}</p>
+
+                                                        <p id="basaltProperPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                                                        <p id="basaltProperSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                                                        <p id="basaltProperSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                                                        {{/each}}
+
+
+                                                        {{#each elJebelData1}}
+                                                        <p id="elJebelActiveListings"> {{this.ActiveListings}}</p>
+                                                        <p id="elJebelNewListings"> {{this.NewListings}}</p>
+                                                        <p id="elJebelPendedListings"> {{this.PendedListings}}</p>
+                                                        <p id="elJebelSoldListings"> {{this.SoldListings}}</p>
+                                                        <p id="elJebelActiveListings-dates"> {{this.Dates}}</p>
+                                                        {{/each}}
+
+                                                        {{#each elJebelData2}}
+                                                        <p id="elJebelAbsorbtion"> {{this.AbsorptionRate}}</p>
+                                                        {{/each}}
+
+                                                        {{#each elJebelData3}}
+                                                        <p id="elJebelActiveAvgPrice"> {{this.ActiveAverageListPrice}}</p>
+                                                        <p id="elJebelNewAvgPrice"> {{this.NewAverageListPrice}}</p>
+                                                        <p id="elJebelPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                                                        <p id="elJebelSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                                                        <p id="elJebelSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                                                        <p id="elJebelActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                                                        <p id="elJebelNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                                                        <p id="elJebelPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                                                        <p id="elJebelSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                                                        <p id="elJebelSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                                                        <p id="">{{/each}}
+
+
+                                                            {{#each elJebelData4}}
+
+                                                            <p id="elJebelSaleToOriginalListPriceRatio">
+                                                                {{this.SaleToOriginalListPriceRatio}}</p>
+                                                            <p id="elJebelSaleToListPriceRatio">
+                                                                {{this.SaleToListPriceRatio}}</p>
+
+                                                            {{/each}}
+
+                                                            {{#each elJebelData5}}
+                                                            <p id="elJebelAverageDom"> {{this.AverageDom}}</p>
+                                                            <p id="elJebelAverageCdom"> {{this.AverageCdom}}</p>
+                                                            {{/each}}
+
+                                                            {{#each elJebelData6}}
+                                                            <p id="elJebelActiveListVolume"> {{this.ActiveListVolume}}</p>
+
+                                                            <p id="elJebelNewListVolume"> {{this.NewListVolume}}</p>
+
+                                                            <p id="elJebelPendedListVolume"> {{this.PendedListVolume}}</p>
+
+                                                            <p id="elJebelSoldListVolume"> {{this.SoldListVolume}}</p>
+
+                                                            <p id="elJebelSoldSaleVolume"> {{this.SoldSaleVolume}}</p>
+
+                                                            {{/each}}
+
+                                                            {{#each carbondaleProperData1}}
+                                                            <p id="carbondaleProperActiveListings">
+                                                                {{this.ActiveListings}}</p>
+                                                            <p id="carbondaleProperNewListings"> {{this.NewListings}}</p>
+                                                            <p id="carbondaleProperPendedListings">
+                                                                {{this.PendedListings}}</p>
+                                                            <p id="carbondaleProperSoldListings"> {{this.SoldListings}}</p>
+                                                            <p id="carbondaleProperActiveListings-dates">
+                                                                {{this.Dates}}</p>
+                                                            {{/each}}
+
+                                                            {{#each carbondaleProperData2}}
+                                                            <p id="carbondaleProperAbsorbtion"> {{this.AbsorptionRate}}</p>
+                                                            {{/each}}
+
+                                                            {{#each carbondaleProperData3}}
+                                                            <p id="carbondaleProperActiveAvgPrice">
+                                                                {{this.ActiveAverageListPrice}}</p>
+                                                            <p id="carbondaleProperNewAvgPrice">
+                                                                {{this.NewAverageListPrice}}</p>
+                                                            <p id="carbondaleProperPendedAvgPrice">{{this.PendedAverageListPrice}}</p>
+                                                            <p id="carbondaleProperSoldAvgPrice">{{this.SoldAverageListPrice}}</p>
+                                                            <p id="carbondaleProperSoldAvgSoldPrice">{{this.SoldAverageSoldPrice}}</p>
+                                                            <p id="carbondaleProperActiveMedianPrice">{{this.ActiveMedianListPrice}}</p>
+                                                            <p id="carbondaleProperNewMedianPrice">{{this.NewMedianListPrice}}</p>
+                                                            <p id="carbondaleProperPendedMedianPrice">{{this.PendedMedianListPrice}}</p>
+                                                            <p id="carbondaleProperSoldMedianPrice">{{this.SoldMedianListPrice}}</p>
+                                                            <p id="carbondaleProperSoldMedianSoldPrice">{{this.SoldMedianSoldPrice}}</p>
+                                                            <p id="">{{/each}}
+
+
+                                                                {{#each carbondaleProperData4}}
+
+                                                                <p id="carbondaleProperSaleToOriginalListPriceRatio">
+                                                                    {{this.SaleToOriginalListPriceRatio}}</p>
+                                                                <p id="carbondaleProperSaleToListPriceRatio">
+                                                                    {{this.SaleToListPriceRatio}}</p>
+
+                                                                {{/each}}
+
+                                                                {{#each carbondaleProperData5}}
+                                                                <p id="carbondaleProperAverageDom"> {{this.AverageDom}}</p>
+                                                                <p id="carbondaleProperAverageCdom">
+                                                                    {{this.AverageCdom}}</p>
+                                                                {{/each}}
+
+                                                                {{#each carbondaleProperData6}}
+                                                                <p id="carbondaleProperActiveListVolume">
+                                                                    {{this.ActiveListVolume}}</p>
+
+                                                                <p id="carbondaleProperNewListVolume">
+                                                                    {{this.NewListVolume}}</p>
+
+                                                                <p id="carbondaleProperPendedListVolume">
+                                                                    {{this.PendedListVolume}}</p>
+
+                                                                <p id="carbondaleProperSoldListVolume">
+                                                                    {{this.SoldListVolume}}</p>
+
+                                                                <p id="carbondaleProperSoldSaleVolume">
+                                                                    {{this.SoldSaleVolume}}</p>
+
+                                                                {{/each}}
+    </div>
+    {{!-- <div class="interactive-map">
+
+        <img src="https://www.alpineproperty.com/images/website/AspenMap.jpg">
+
+
+        <div class="map-point">
+            <span class="tooltip tooltip-effect-4" style="top:3%; right:24%;">
+                <span>
+                    <div class="cover" style="
+    font-size: 2vw;
+    color: #b92020;
+    background-color: white;
+    width: 120px;
+    height: 160px;"></div>
+                    <span class="tooltip-content clearfix">
+                        <span class="tooltip-text">
+                            Central Core<br>
+                            <hr><br>
+                            Number of Current Listings: 102<br>
+                            Number of Sales:64<br>
+                            Average Sale Price:$3,675,771<br>
+                            Average Sale Price to List Ratio:94%<br>
+                            Average Sale Price Per Sq Ft:$1,820<br>
+                            Highest Sale Price:$18,344,736<br>
+                            Lowest Sale Price: $430,000<br>
+
+                        </span>
+                    </span>
+                </span>
+        </div>
+
+
+        <div class="map-point">
+            <span class="tooltip tooltip-effect-4" style="top:69%; right:26%;">
+                <span class="tooltip-item">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span class="tooltip-content clearfix">
+                        <span class="tooltip-text">
+                            East Aspen<br>
+                            <hr><br>
+                            Number of Current Listings: 39 <br>
+                            Number of Sales: 10<br>
+                            Average Sale Price: $5,493,750<br>
+                            Average Sale Price to List Ratio: 92%<br>
+                            Average Sale Price Per Sq Ft: $1,295<br>
+                            Highest Sale Price: $19,000,000<br>
+                            Lowest Sale Price: $2,250,000<br>
+                        </span>
+                    </span>
+                </span>
+        </div>
+
+
+        <div class="map-point">
+            <span class="tooltip tooltip-effect-4" style="top:49%; right:30%;">
+                <span class="tooltip-item">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span class="tooltip-content clearfix">
+                        <span class="tooltip-text">
+                            Smuggler<br>
+                            <hr><br>
+                            Number of Current Listings: 26<br>
+                            Number of Sales: 15<br>
+                            Average Sale Price: $4,659,667<br>
+                            Average Sale Price to List Ratio: 94%<br>
+                            Average Sale Price Per Sq Ft: $1,334<br>
+                            Highest Sale Price: $21,500,000<br>
+                            Lowest Sale Price: $545,000<br>
+                        </span>
+                    </span>
+                </span>
+        </div>
+        <div class="map-point">
+            <span class="tooltip tooltip-effect-4" style="top:50%; right:54%;">
+                <span class="tooltip-item">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span class="tooltip-content clearfix">
+                        <span class="tooltip-text">
+                            West End<br>
+                            <hr><br>
+                            Number of Current Listings: 48<br>
+                            Number of Sales: 26<br>
+                            Average Sale Price:$4,605,494<br>
+                            Average Sale Price to List Ratio:91%<br>
+                            Average Sale Price Per Sq Ft:$1,590<br>
+                            Highest Sale Price:$17,500,000<br>
+                            Lowest Sale Price: $810,000<br>
+
+                        </span>
+                    </span>
+                </span>
+        </div>
+
+        <div class="map-point">
+            <span class="tooltip tooltip-effect-4" style="top:29%; right:48%;">
+                <span class="tooltip-item">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span class="tooltip-content clearfix">
+                        <span class="tooltip-text">
+                            Red Mountain <br>
+                            <hr><br>
+                            Number of Current Listings: 33<br>
+                            Number of Sales:4 <br>
+                            Average Sale Price:$11,325,000<br>
+                            Average Sale Price to List Ratio:94%<br>
+                            Average Sale Price Per Sq Ft:$1,806<br>
+                            Highest Sale Price:$15,200,000<br>
+                            Lowest Sale Price: $4,800,000<br>
+
+                        </span>
+                    </span>
+                </span>
+        </div>
+        <div class="map-point">
+            <span class="tooltip tooltip-effect-4" style="top:61%; right:71%;">
+                <span class="tooltip-item">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span class="tooltip-content clearfix">
+                        <span class="tooltip-text">
+                            West Aspen<br>
+                            <hr><br>
+                            Number of Current Listings: 112<br>
+                            Number of Sales:31<br>
+                            Average Sale Price:$3,451,242<br>
+                            Average Sale Price to List Ratio:92%<br>
+                            Average Sale Price Per Sq Ft:$988<br>
+                            Highest Sale Price:$10,400,000<br>
+                            Lowest Sale Price: $239,000<br>
+
+                        </span>
+                    </span>
+                </span>
+        </div>
+
+        <div class="map-point">
+            <span class="tooltip tooltip-effect-4" style="top:8%; right:75%;">
+                <span class="tooltip-item">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span class="tooltip-content clearfix">
+                        <span class="tooltip-text">
+                            Mclain Flats & Starwood<br>
+                            <hr><br>
+                            Number of Current Listings: 19<br>
+                            Number of Sales:8<br>
+                            Average Sale Price:$5,981,250<br>
+                            Average Sale Price to List Ratio:89%<br>
+                            Average Sale Price Per Sq Ft:$1,062<br>
+                            Highest Sale Price:$9,025,000<br>
+                            Lowest Sale Price: $2,100,000<br>
+
+                        </span>
+                    </span>
+                </span>
+        </div>
+    </div> --}}
+
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYFXJkYOxxDT3jU1jb5DorpO5rWrPrD-o&callback=initMap">
+    </script>
+</section> <!-- end s-works -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/js/marketMapFE.js"></script>
